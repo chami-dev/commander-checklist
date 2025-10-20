@@ -123,3 +123,17 @@ th:nth-child(2)  /* VIP */ {
 th:nth-child(3)  /* 水晶課金 */ {
     min-width: 180px;
 }
+
+/* style.css に追加または修正 */
+
+/* 指揮官名のセルすべてに適用 */
+table th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)), /* 最初の3つのth（ユーザー名、VIP、水晶課金）以外 */
+table td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) { /* 最初の3つのtd以外 */
+    min-width: 80px; /* 例えば80px。必要に応じて調整してください */
+    width: 80px; /* min-widthと合わせてwidthも指定するとより安定します */
+}
+
+/* もし上記でうまく適用できない場合、より具体的に2行目のthに指定 */
+thead tr:nth-child(2) th {
+    min-width: 80px; /* 例えば80px。必要に応じて調整してください */
+    width: 80px; /* min-widthと合わせてwidthも指定するとより安定します */
