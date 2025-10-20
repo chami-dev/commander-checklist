@@ -1,5 +1,5 @@
 body {
-    font-family:  "Helvetica Neue",
+    font-family: "Helvetica Neue",
     Arial,
     "Hiragino Kaku Gothic ProN",
     "Hiragino Sans",
@@ -111,9 +111,16 @@ button:hover {
     background-color: #4A8CCB; /* メインカラーより少し濃い水色 */
 }
 
+/* カテゴリヘッダーの強調 */
+/* ここでカテゴリヘッダー全体のデフォルトの右ボーダーを太く設定 */
 .category-header {
-    background-color: #4A8CCB !important; /* カテゴリヘッダーの色をメインカラーより少し濃く */
+    border-right: 3px solid #666; /* カテゴリ間の太い区切り線のデフォルト色 */
 }
+/* 最後のカテゴリヘッダーの右ボーダーは通常の太さに戻す */
+.category-header:last-of-type {
+    border-right: 1px solid #ccc;
+}
+
 
 /* ヘッダーのVIPと水晶課金の幅を調整 */
 th:nth-child(1), /* ユーザー名 */
@@ -124,7 +131,86 @@ th:nth-child(3)  /* 水晶課金 */ {
     min-width: 180px;
 }
 
-/* style.css に追加または修正 */
+/* 指揮官名のセルすべてに均一な幅を適用 */
+/* 最初の3つのth/td（ユーザー名、VIP、水晶課金）以外に適用 */
+table th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)),
+table td:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)) {
+    min-width: 80px; /* 例えば80px。必要に応じて調整してください */
+    width: 80px; /* min-widthと合わせてwidthも指定するとより安定します */
+}
+
+
+/* カテゴリごとの背景色と枠線 */
+
+/* 歩兵 (青系) */
+/* ヘッダーにのみ太い右ボーダーを設定 */
+.infantry-header.category-header { /* .category-headerも指定して優先度を上げる */
+    background-color: #6EB5FF !important;
+    border-right-color: #3A7FB0; /* カテゴリヘッダーの右ボーダーの色 */
+}
+.infantry-commander { background-color: #A7D2FF; color: #333; }
+.infantry-cell {
+    background-color: #D6ECFF;
+    border-right: 1px solid #cce; /* tbodyのtdの右ボーダーは通常の細さに戻す */
+}
+/* 歩兵カテゴリの最後の指揮官セルは、その次のカテゴリとの境なので右ボーダーを少し強調する（細い線で） */
+/* マルテル、ゼノビアのセル */
+tbody tr td.infantry-cell:nth-last-of-type(19), /* マルテル */
+tbody tr td.infantry-cell:nth-last-of-type(16) { /* ゼノビア */
+    border-right: 2px solid #A7D2FF; /* 少し太めの細い線でカテゴリ区切りを示す */
+}
+
+
+/* 騎兵 (黄系) */
+/* ヘッダーにのみ太い右ボーダーを設定 */
+.cavalry-header.category-header {
+    background-color: #FFC107 !important;
+    border-right-color: #E0A800; /* カテゴリヘッダーの右ボーダーの色 */
+}
+.cavalry-commander { background-color: #FFDA64; color: #333; }
+.cavalry-cell {
+    background-color: #FFF2CC;
+    border-right: 1px solid #eed; /* tbodyのtdの右ボーダーは通常の細さに戻す */
+}
+/* 騎兵カテゴリの最後の指揮官セルは、その次のカテゴリとの境なので右ボーダーを少し強調する（細い線で） */
+/* ユスティニアヌス、ヤンのセル */
+tbody tr td.cavalry-cell:nth-last-of-type(13), /* ユスティニアヌス */
+tbody tr td.cavalry-cell:nth-last-of-type(11) { /* ヤン */
+    border-right: 2px solid #FFDA64;
+}
+
+
+/* 弓兵 (赤紫系) */
+/* ヘッダーにのみ太い右ボーダーを設定 */
+.archer-header.category-header {
+    background-color: #E056FD !important;
+    border-right-color: #C04BE0; /* カテゴリヘッダーの右ボーダーの色 */
+}
+.archer-commander { background-color: #F0A5FF; color: #333; }
+.archer-cell {
+    background-color: #FDE6FF;
+    border-right: 1px solid #ecc; /* tbodyのtdの右ボーダーは通常の細さに戻す */
+}
+/* 弓兵カテゴリの最後の指揮官セルは、その次のカテゴリとの境なので右ボーダーを少し強調する（細い線で） */
+/* ヘンリー、ディドーのセル */
+tbody tr td.archer-cell:nth-last-of-type(5), /* ヘンリー */
+tbody tr td.archer-cell:nth-last-of-type(3) { /* ディドー */
+    border-right: 2px solid #F0A5FF;
+}
+
+
+/* 統率 (緑系) - 最後のカテゴリなので右ボーダーは通常に戻す */
+.leadership-header.category-header {
+    background-color: #8BC34A !important;
+    border-right: 1px solid #ccc; /* 最後のカテゴリなので右ボーダーは細く */
+}
+.leadership-commander { background-color: #B9E67B; color: #333; }
+.leadership-cell { background-color: #E6F7D2; }
+
+/* 最後の指揮官セルの右ボーダーは通常の細さに戻す */
+table td:last-of-type {
+    border-right: 1px solid #ccc;
+}
 
 /* 指揮官名のセルすべてに適用 */
 table th:not(:nth-child(1)):not(:nth-child(2)):not(:nth-child(3)), /* 最初の3つのth（ユーザー名、VIP、水晶課金）以外 */

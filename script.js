@@ -2,23 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const userRowsContainer = document.getElementById('user-rows-container');
     const addUserRowButton = document.getElementById('add-user-row');
 
-    // 指揮官の名前リスト (index.htmlのthタグの並び順と完全に同期)
-    const commanderNames = [
-        // 歩兵ラリー
-        "Pスキピオ", "ターリク", "劉徹", "マルテル",
-        // 歩兵防衛
-        "ゴルゴー", "徳川家康", "ゼノビア",
-        // 騎兵ラリー
-        "スブタイ", "アッティラ", "ユスティニアヌス",
-        // 騎兵防衛
-        "アリエノール", "ヤン",
-        // 弓兵ラリー
-        "シャープール", "嬴政", "アッシュルバニパル", "諸葛亮", "ギルガメッシュ", "ヘンリー",
-        // 弓兵防衛
-        "崔瑩", "ディドー",
-        // 統率
-        "ヘラクレス", "yss"
+    // 指揮官の名前リスト (カテゴリ情報を追加)
+    // HTMLの<th>タグの並び順と完全に同期させる
+    const commanderCategories = [
+        { name: "歩兵ラリー", type: "infantry", commanders: ["Pスキピオ", "ターリク", "劉徹", "マルテル"] },
+        { name: "歩兵防衛", type: "infantry", commanders: ["ゴルゴー", "徳川家康", "ゼノビア"] },
+        { name: "騎兵ラリー", type: "cavalry", commanders: ["スブタイ", "アッティラ", "ユスティニアヌス"] },
+        { name: "騎兵防衛", type: "cavalry", commanders: ["アリエノール", "ヤン"] },
+        { name: "弓兵ラリー", type: "archer", commanders: ["シャープール", "嬴政", "アッシュルバニパル", "諸葛亮", "ギルガメッシュ", "ヘンリー"] },
+        { name: "弓兵防衛", type: "archer", commanders: ["崔瑩", "ディドー"] },
+        { name: "統率", type: "leadership", commanders: ["ヘラクレス", "yss"] }
     ];
+
+    // 全指揮官名をフラットな配列として取得 (既存ロジックのため)
+    const commanderNames = commanderCategories.flatMap(cat => cat.commanders);
 
     // VIPレベルの選択肢
     const vipOptions = ["-", "15", "16", "17", "18", "19", "SVIP"];
@@ -46,21 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // ユーザーデータの初期構造を生成
     function createNewUserData() {
         const newUserData = {
-            id: Date.now(), // 一意のID (削除機能を実装する場合に便利)
+            id: Date.now(),
             username: '',
             vip: vipOptions[0],
             crystalPack: crystalPackOptions[0],
             commanders: {}
         };
         commanderNames.forEach(name => {
-            newUserData.commanders[name] = false; // 全ての指揮官を未所持で初期化
+            newUserData.commanders[name] = false;
         });
         return newUserData;
     }
 
     // テーブル全体をレンダリング
     function renderTable() {
-        userRowsContainer.innerHTML = ''; // 既存の行をクリア
+        userRowsContainer.innerHTML = '';
         userData.forEach(user => {
             const row = createTableRow(user);
             userRowsContainer.appendChild(row);
@@ -70,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1つのユーザー行を生成
     function createTableRow(user) {
         const tr = document.createElement('tr');
-        tr.dataset.userId = user.id; // 行にユーザーIDを紐付け
+        tr.dataset.userId = user.id;
 
         // ユーザー名セル
         const nameTd = document.createElement('td');
@@ -124,18 +121,24 @@ document.addEventListener('DOMContentLoaded', () => {
         tr.appendChild(crystalPackTd);
 
         // 指揮官チェックボックスセル
-        commanderNames.forEach(commanderName => {
-            const td = document.createElement('td');
-            const checkbox = document.createElement('input');
-            checkbox.type = 'checkbox';
-            checkbox.checked = user.commanders[commanderName] || false; // 未定義の場合はfalse
-            checkbox.dataset.commanderName = commanderName; // データ属性で指揮官名を紐付け
-            checkbox.addEventListener('change', (e) => {
-                user.commanders[commanderName] = e.target.checked;
-                saveUserData();
+        let currentCommanderIndex = 0;
+        commanderCategories.forEach(category => {
+            category.commanders.forEach(commanderName => {
+                const td = document.createElement('td');
+                td.classList.add(`${category.type}-cell`); // カテゴリタイプをクラスとして追加
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = user.commanders[commanderName] || false;
+                checkbox.dataset.commanderName = commanderName;
+                checkbox.addEventListener('change', (e) => {
+                    user.commanders[commanderName] = e.target.checked;
+                    saveUserData();
+                });
+                td.appendChild(checkbox);
+                tr.appendChild(td);
+                currentCommanderIndex++;
             });
-            td.appendChild(checkbox);
-            tr.appendChild(td);
         });
 
         return tr;
@@ -145,16 +148,25 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadUserData() {
         const storedData = localStorage.getItem(STORAGE_KEY);
         try {
-            return storedData ? JSON.parse(storedData) : [];
+            // commanderNames配列が更新された場合でも既存データと整合性を取る
+            const parsedData = storedData ? JSON.parse(storedData) : [];
+            return parsedData.map(user => {
+                const updatedCommanders = {};
+                commanderNames.forEach(name => { // 新しいcommanderNamesに基づいて初期化
+                    updatedCommanders[name] = user.commanders[name] || false;
+                });
+                return { ...user, commanders: updatedCommanders };
+            });
         } catch (e) {
             console.error("Failed to parse stored data:", e);
-            return []; // パースエラーの場合は空の配列を返す
+            return [];
         }
     }
+
 
     // ユーザーデータをLocalStorageに保存
     function saveUserData() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
-        console.log("User data saved to LocalStorage."); // デバッグ用
+        console.log("User data saved to LocalStorage.");
     }
 });
