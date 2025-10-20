@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>指揮官チェックリスト</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>指揮官チェックリスト</h1>
+        <p>各ユーザーの所持状況をチェックし、ローカルに保存できます。</p>
+
+        <div class="table-scroll-wrapper">
+            <table id="commander-checklist-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">ユーザー名</th>
+                        <th rowspan="2">VIP</th>
+                        <th rowspan="2">水晶課金</th>
+                        <th colspan="4" class="category-header">歩兵</th>
+                        <th colspan="4" class="category-header">騎兵</th>
+                        <th colspan="5" class="category-header">弓兵</th>
+                        <th colspan="2" class="category-header">統率</th>
+                    </tr>
+                    <tr>
+                        <th>ラリー<br>Pスキピオ</th>
+                        <th>ラリー<br>ターリク</th>
+                        <th>ラリー<br>劉徹</th>
+                        <th>ラリー<br>マルテル</th>
+                        <th>防衛<br>ゴルゴー</th>
+                        <th>防衛<br>徳川家康</th>
+                        <th>防衛<br>ゼノビア</th>
+                        <th>ラリー<br>スブタイ</th>
+                        <th>ラリー<br>アッティラ</th>
+                        <th>ラリー<br>ユスティニアヌス</th>
+                        <th>防衛<br>アリエノール</th>
+                        <th>防衛<br>ヤン</th>
+                        <th>ラリー<br>シャープール</th>
+                        <th>ラリー<br>嬴政</th>
+                        <th>ラリー<br>アッシュルバニパル</th>
+                        <th>ラリー<br>諸葛亮</th>
+                        <th>ラリー<br>ギルガメッシュ</th>
+                        <th>ラリー<br>ヘンリー</th>
+                        <th>防衛<br>崔瑩</th>
+                        <th>防衛<br>ディドー</th>
+                        <th>統率<br>ヘラクレス</th>
+                        <th>統率<br>yss</th>
+                    </tr>
+                </thead>
+                <tbody id="user-rows-container">
+                    <!-- JavaScriptでユーザーごとの行がここに追加されます -->
+                </tbody>
+            </table>
+        </div>
+        
+        <button id="add-user-row">新しいユーザーを追加</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
