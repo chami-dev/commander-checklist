@@ -22,7 +22,7 @@ body {
 
 h1 {
     text-align: center;
-    color: #4CAF50; /* 緑色 */
+    color: #5B9BD5; /* 水色ベースのメインカラー */
     margin-bottom: 20px;
 }
 
@@ -51,7 +51,7 @@ th, td {
 }
 
 thead th {
-    background-color: #4CAF50; /* 緑色 */
+    background-color: #5B9BD5; /* 水色ベースのメインカラー */
     color: white;
     font-weight: bold;
     position: sticky; /* ヘッダーを固定 */
@@ -91,7 +91,7 @@ button {
     width: 200px;
     padding: 12px;
     margin: 20px auto 0;
-    background-color: #4CAF50;
+    background-color: #5B9BD5; /* 水色ベースのメインカラー */
     color: white;
     border: none;
     border-radius: 4px;
@@ -101,11 +101,11 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #4A8CCB; /* メインカラーより少し濃い水色 */
 }
 
 .category-header {
-    background-color: #367c39 !important; /* カテゴリヘッダーの色を少し濃く */
+    background-color: #4A8CCB !important; /* カテゴリヘッダーの色をメインカラーより少し濃く */
 }
 
 /* ヘッダーのVIPと水晶課金の幅を調整 */

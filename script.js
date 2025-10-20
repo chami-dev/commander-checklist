@@ -2,14 +2,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const userRowsContainer = document.getElementById('user-rows-container');
     const addUserRowButton = document.getElementById('add-user-row');
 
-    // 指揮官の名前リスト (HTMLのthタグのidと同期)
+    // 指揮官の名前リスト (index.htmlのthタグの並び順と完全に同期)
     const commanderNames = [
+        // 歩兵ラリー
         "Pスキピオ", "ターリク", "劉徹", "マルテル",
+        // 歩兵防衛
         "ゴルゴー", "徳川家康", "ゼノビア",
+        // 騎兵ラリー
         "スブタイ", "アッティラ", "ユスティニアヌス",
+        // 騎兵防衛
         "アリエノール", "ヤン",
+        // 弓兵ラリー
         "シャープール", "嬴政", "アッシュルバニパル", "諸葛亮", "ギルガメッシュ", "ヘンリー",
+        // 弓兵防衛
         "崔瑩", "ディドー",
+        // 統率
         "ヘラクレス", "yss"
     ];
 
